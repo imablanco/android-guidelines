@@ -1,3 +1,11 @@
+# 0. Android Studio Settings Bundle
+There is a Settings Bundle for Android Studio which adds automatic codestyle checking for the rules set out below. To install it:
+
+1. Download the [settings.jar](../settings.jar) file.
+2. Open Android Studio and import the settings through `File -> Import Settings…`.
+3. Make sure the code style rules are configured via `Preferences -> Editor -> Code Style`.
+4. Format your code with `cmd + alt + L` (Mac) or `Ctrl + Alt + L`. 
+
 # 1. Project guidelines
 
 ## 1.1 Project structure
