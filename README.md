@@ -5,7 +5,12 @@ List of guidelines that we use at [ribot](http://ribot.co.uk) when developing fo
 * [Project and code style guidelines](project_and_code_guidelines.md)
 * [Architecture Guidelines](architecture_guidelines/android_architecture.md)
 
-### License
+## Contributing
+### Code of Conduct
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## License
 
 ```
 Copyright 2015 Ribot Ltd.
