@@ -1,16 +1,8 @@
-# 0. Android Studio Settings Bundle
-There is a Settings Bundle for Android Studio which adds automatic codestyle checking for the rules set out below. To install it:
-
-1. Download the [settings.jar](../settings.jar) file.
-2. Open Android Studio and import the settings through `File -> Import Settings…`.
-3. Make sure the code style rules are configured via `Preferences -> Editor -> Code Style`.
-4. Format your code with `cmd + alt + L` (Mac) or `Ctrl + Alt + L` (Windows/Linux). 
-
 # 1. Project guidelines
 
 ## 1.1 Project structure
 
-New projects should follow the Android Gradle project structure that is defined on the [Android Gradle plugin user guide](http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Project-Structure). The [ribot Boilerplate](https://github.com/ribot/android-boilerplate) project is a good reference to start from.
+New projects should follow the Android Gradle project structure that is defined on the [Android Gradle plugin user guide](http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Project-Structure).
 
 ## 1.2 File naming
 
@@ -49,6 +41,7 @@ Naming conventions for icons (taken from [Android iconography guidelines](http:/
 | Status bar icons                | `ic_stat_notify`   | `ic_stat_notify_msg.png`     |
 | Tab icons                       | `ic_tab`           | `ic_tab_recent.png`          |
 | Dialog icons                    | `ic_dialog`        | `ic_dialog_info.png`         |
+| Background images               | `bg_`              | `bg_settings_activity.png`   |
 
 Naming conventions for selector states:
 
@@ -71,11 +64,12 @@ Layout files should match the name of the Android components that they are inten
 | Fragment         | `SignUpFragment`       | `fragment_sign_up.xml`        |
 | Dialog           | `ChangePasswordDialog` | `dialog_change_password.xml`  |
 | AdapterView item | ---                    | `item_person.xml`             |
-| Partial layout   | ---                    | `partial_stats_bar.xml`       |
+| Custom views     | `MyCustomView`         | `view_custom.xml`             |
+| Partial layouts  |                        | `layout_home.xml`             |
 
-A slightly different case is when we are creating a layout that is going to be inflated by an `Adapter`, e.g to populate a `ListView`. In this case, the name of the layout should start with `item_`.
+A slightly different case is when we are creating a layout that is going to be inflated by an `Adapter`, e.g to populate a `RecyclerView`. In this case, the name of the layout should start with `item_`.
 
-Note that there are cases where these rules will not be possible to apply. For example, when creating layout files that are intended to be part of other layouts. In this case you should use the prefix `partial_`.
+Note that there are cases where these rules will not be possible to apply. For example, when creating layout files that are intended to be part of other layouts. In this case you should use the prefix `layout_`.
 
 #### 1.2.1.3 Menu files
 
@@ -144,6 +138,7 @@ See more info [here](https://source.android.com/source/code-style.html#fully-qua
 Fields should be defined at the __top of the file__ and they should follow the naming rules listed below.
 
 * Private, non-static field names start with __m__.
+* Private, non-static field ___VIEW___ names start with the capital letters of the View name in lowercase. i.e: TextView fields should start with ___tv___.
 * Private, static field names start with __s__.
 * Other fields start with a lower case letter.
 * Static final fields (constants) are ALL_CAPS_WITH_UNDERSCORES.
@@ -157,6 +152,7 @@ public class MyClass {
     private static MyClass sSingleton;
     int mPackagePrivate;
     private int mPrivate;
+    private TextView tvTitle;
     protected int mProtected;
 }
 ```
@@ -312,12 +308,13 @@ if (BuildConfig.DEBUG) Log.d(TAG, "The value of x is " + x);
 There is no single correct solution for this but using a __logical__ and __consistent__ order will improve code learnability and readability. It is recommendable to use the following order:
 
 1. Constants
-2. Fields
-3. Constructors
-4. Override methods and callbacks (public or private)
-5. Public methods
-6. Private methods
-7. Inner classes or interfaces
+2. Uninitialized fields
+3. Initialized fields
+4. Constructors
+5. Override methods and callbacks (public or private)
+6. Public methods
+7. Private methods
+8. Inner classes or interfaces
 
 Example:
 
@@ -325,7 +322,7 @@ Example:
 public class MainActivity extends Activity {
 
 	private String mTitle;
-    private TextView mTextViewTitle;
+    private TextView tvTitle;
 
     public void setTitle(String title) {
     	mTitle = title;
@@ -394,7 +391,7 @@ When using one of these components, you __must__ define the keys as a `static fi
 | -----------------  | ----------------- |
 | SharedPreferences  | `PREF_`             |
 | Bundle             | `BUNDLE_`           |
-| Fragment Arguments | `ARGUMENT_`         |
+| Fragment Arguments | `ARG_`              |
 | Intent Extra       | `EXTRA_`            |
 | Intent Action      | `ACTION_`           |
 
@@ -564,21 +561,26 @@ Resource IDs and names are written in __lowercase_underscore__.
 
 #### 2.3.2.1 ID naming
 
-IDs should be prefixed with the name of the element in lowercase underscore. For example:
+IDs should be prefixed with the capitalletters of the element name in lowercase underscore. For example:
 
 
 | Element            | Prefix            |
 | -----------------  | ----------------- |
-| `TextView`           | `text_`             |
-| `ImageView`          | `image_`            |
-| `Button`             | `button_`           |
-| `Menu`               | `menu_`             |
+| `TextView`         | `tv_`             |
+| `ImageView`        | `iv_`             |
+| `Button`           | `bt_`             |
+| `Menu`             | `menu_`           |
+| `EditText`         | `et_`             |
+
+The same rules applies for all elements: ___rv____ for ___RecyclerView___, ___ll___ for ___LinearLayout___ etc...
+Special rules applies for elements that can not complain with this rules, such as ___Button___ with ___bt___.
+In that case the name should be enough readable for team members to be able to figure out wich type of element is pointing.
 
 Image view example:
 
 ```xml
 <ImageView
-    android:id="@+id/image_profile"
+    android:id="@+id/iv_profile"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
 ```
